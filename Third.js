@@ -25,3 +25,63 @@
 
 // N and M are integers within the range [1..100,000];
 // each element of arrays A and B is an integer within the range [0..1,000,000,000].
+
+	
+function solution(A, B) {
+    const ASet = new Set(A);
+
+    const minCommonValue = B.reduce((acc, curr) => {
+        if (ASet.has(curr)) {
+            return Math.min(acc, curr);
+        }
+        return acc;
+    }, Infinity);
+
+    return minCommonValue === Infinity ? -1 : minCommonValue;
+}
+
+// Test cases
+function runTest(A, B, expected) {
+    const result = solution(A, B);
+    console.log(`Input: A = [${A}], B = [${B}]`);
+    console.log(`Expected: ${expected}`);
+    console.log(`Result: ${result}`);
+    console.log(result === expected ? "PASS" : "FAIL");
+    console.log("---");
+}
+
+// Test case 1 (from example)
+runTest([1, 3, 2, 1], [4, 2, 5, 3, 2], 2);
+
+// Test case 2 (from example)
+runTest([2, 3], [3, 3], 3);
+
+// Test case 3 (from example)
+runTest([6, 7, 8, 9, 8], [8, 10, 11, 12, 9], 8);
+
+// Test case 4 (from example)
+runTest([2, 1], [3, 3], -1);
+
+// Test case 5: Empty arrays
+runTest([], [], -1);
+
+// Test case 6: One empty array
+runTest([1, 2, 3], [], -1);
+
+// Test case 7: Large numbers
+runTest([1000000, 2000000], [2000000, 3000000], 2000000);
+
+// Test case 8: Negative numbers
+runTest([-5, -3, -1], [-4, -3, -2], -3);
+
+// Test case 9: Multiple common elements
+runTest([1, 2, 3, 4, 5], [5, 4, 3, 2, 1], 1);
+
+// Test case 10: Single element arrays
+runTest([1], [1], 1);
+
+// Test case 11: Repeated elements
+runTest([1, 1, 1], [2, 2, 1], 1);
+
+// Test case 12: All elements common
+runTest([1, 2, 3], [3, 2, 1], 1);
