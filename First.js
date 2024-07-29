@@ -22,3 +22,30 @@
 
 // N is an integer within the range [1..30,000];
 // each element of array A is an integer within the range [0..70,000].
+
+
+function solution(A) {
+    // Implement your solution here
+    const totalPollution = A.reduce((sum, factory) => sum + factory, 0);
+    const halfPollution = totalPollution / 2;
+    let filtersNeeded = 0;
+    let currentPollution = 0;
+    let factories = [...A];
+  
+    while (currentPollution < halfPollution) {
+      const maxPollutingIndex = factories.indexOf(Math.max(...factories));
+      const halfPollutionAmount = factories[maxPollutingIndex] / 2;
+      factories[maxPollutingIndex] = halfPollutionAmount;
+      currentPollution += halfPollutionAmount;
+      filtersNeeded++;
+    }
+  
+    return filtersNeeded;
+  }
+
+
+  // Test cases
+console.log(solution([5, 19, 8, 1]));       // Should return 3
+console.log(solution([10, 10, 10]));        // Should return 3
+console.log(solution([10, 20, 30]));        // Should return 3
+console.log(solution([7, 7, 7, 7, 7]));     // Should return 5
